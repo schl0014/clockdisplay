@@ -1,40 +1,24 @@
-class Animal
-{
-  private readonly name: string;
+console.log('Javascript is working!');
 
-  private readonly legs: number;
+// Add EventListener to load the game whenever the browser is ready
+window.addEventListener('load', () => {
+  console.log('Handling the Load event');
+  // Get the relevant DOM elements
+  const outputHTMLElement = document.getElementById('output') as HTMLElement;
+  const hoursInput = document.getElementById('hoursInput') as HTMLInputElement;
+  const minutesInput = document.getElementById('minutesInput') as HTMLInputElement;
 
-  private readonly sound: string;
+  // Create the clock
+  const clock = new ClockDisplay(outputHTMLElement);
 
-  public constructor(name: string, legs: number, sound: string) {
-    this.name = name;
-    this.legs = legs;
-    this.sound = sound;
-  }
+  // Register event listener functions
+  document.getElementById('tickerButton').addEventListener('click', () => {
+    console.log('User clicked ticker button');
+    clock.timeTick();
+  });
 
-  public getName(): string {
-    return this.name;
-  }
-
-  public getLegs(): number {
-    return this.legs;
-  }
-
-  public getSound(): string {
-    return this.sound;
-  }
-}
-
-const animals = [
-  new Animal('dog', 4, 'woof'),
-  new Animal('cat', 4, 'meow'),
-];
-
-animals.forEach(
-  (animal) => console.log(
-    'A %s has %s legs and goes %s!',
-    animal.getName(),
-    animal.getLegs(),
-    animal.getSound(),
-  ),
-);
+  document.getElementById('setTime').addEventListener('click', () => {
+    console.log('User clicked setTime button');
+    clock.setTime(hoursInput.value, minutesInput.value);
+  });
+});

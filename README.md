@@ -1,3 +1,13 @@
+# ClockDisplay
+Simple clock to demonstrate collaborating objects.
+
+## Features
+
+With this clockdisplay, you have:
+* An hours-minute clock
+* Manual ticking for testing and experimenting
+* Set hours, minutes and seconds manually
+
 # Installing TypeScript
 
 This is a skeleton app for people who want to use TypeScript. A docker-compose file is included for those who want to run it in a container.
