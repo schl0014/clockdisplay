@@ -1,35 +1,28 @@
+import NumberDisplay from './NumberDisplay.js';
 export default class ClockDisplay {
     hours;
     minutes;
     output;
     constructor(output) {
         this.output = output;
-        this.hours = 0;
-        this.minutes = 0;
+        this.hours = new NumberDisplay(24);
+        this.minutes = new NumberDisplay(60);
         this.updateDisplay();
     }
     timeTick() {
-        this.minutes = (this.minutes + 1) % 60;
-        if (this.minutes === 0) {
-            this.hours = (this.hours + 1) % 24;
+        this.minutes.increment();
+        if (this.minutes.getValue() === 0) {
+            this.hours.increment();
         }
         this.updateDisplay();
     }
     setTime(hours, minutes) {
-        this.hours = Number(hours);
-        this.minutes = Number(minutes);
+        this.hours.setStringValue(hours);
+        this.minutes.setStringValue(minutes);
         this.updateDisplay();
     }
     updateDisplay() {
-        let displayString = '';
-        if (this.hours < 10) {
-            displayString += '0';
-        }
-        displayString += `${this.hours}:`;
-        if (this.minutes < 10) {
-            displayString += '0';
-        }
-        displayString += this.minutes;
+        const displayString = `${this.hours.getStringValue()}:${this.minutes.getStringValue()}`;
         this.output.innerText = displayString;
     }
 }
