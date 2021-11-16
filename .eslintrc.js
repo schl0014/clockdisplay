@@ -17,11 +17,13 @@ module.exports = {
   },
   rules: {
     'no-console': 0,
+    'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
+    'linebreak-style': 0,
     'jsdoc/require-jsdoc': [
       'error', 
       {
         'contexts': [
-          'MethodDefinition:not([accessibility="private"])'
+          'MethodDefinition:not([accessibility="private"],[kind="get"],[kind="set"])',
         ],
         'require': {
           'ClassDeclaration': false,
@@ -30,6 +32,7 @@ module.exports = {
       }
     ],
     'jsdoc/require-param-type': 0,
+    'jsdoc/require-returns-type': 0,
     'jsdoc/no-types': [
       'warn',
       {
@@ -37,15 +40,21 @@ module.exports = {
       } 
     ],
     'camelcase': 'off',
+    '@typescript-eslint/triple-slash-reference': 0,
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-inferrable-types': 0,
     '@typescript-eslint/naming-convention': [
       'error',
       {
         'selector': 'default',
         'format': ['camelCase']
       },
-  
       {
         'selector': 'variable',
+        'format': ['camelCase', 'UPPER_CASE']
+      },
+      {
+        'selector': 'classProperty',
         'format': ['camelCase', 'UPPER_CASE']
       },
       {
@@ -53,17 +62,15 @@ module.exports = {
         'format': ['camelCase'],
         'leadingUnderscore': 'allow'
       },
-  
       {
         'selector': 'memberLike',
         'modifiers': ['private'],
         'format': ['camelCase']
       },
-  
       {
         'selector': 'typeLike',
         'format': ['PascalCase']
       }
-    ]  
+    ],
   }
 };

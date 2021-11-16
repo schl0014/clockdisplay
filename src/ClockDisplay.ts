@@ -10,8 +10,7 @@
  *
  * @author Michael Kölling, David J. Barnes and BugSlayer
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class ClockDisplay {
+export default class ClockDisplay {
   private hours: number;
 
   private minutes: number;
