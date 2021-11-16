@@ -1,7 +1,4 @@
 class ClockDisplay {
-    hours;
-    minutes;
-    output;
     constructor(output) {
         this.output = output;
         this.hours = new NumberDisplay(24);
@@ -26,8 +23,6 @@ class ClockDisplay {
     }
 }
 class NumberDisplay {
-    limit;
-    value;
     constructor(rollOverLimit) {
         this.limit = rollOverLimit;
         this.value = 0;
@@ -41,12 +36,11 @@ class NumberDisplay {
         }
     }
     getStringValue() {
+        let prefix = '';
         if (this.value < 10) {
-            return "0" + this.value;
+            prefix = '0';
         }
-        else {
-            return "" + this.value;
-        }
+        return prefix + this.value;
     }
     setStringValue(newValue) {
         this.setValue(Number(newValue));

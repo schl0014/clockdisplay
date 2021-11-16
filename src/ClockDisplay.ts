@@ -12,9 +12,9 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ClockDisplay {
-  private hours : NumberDisplay;
+  private hours: number;
 
-  private minutes : NumberDisplay;
+  private minutes: number;
 
   private output: HTMLElement;
 
@@ -26,8 +26,8 @@ class ClockDisplay {
    */
   public constructor(output: HTMLElement) {
     this.output = output;
-    this.hours = new NumberDisplay(24);
-    this.minutes = new NumberDisplay(60);
+    this.hours = 0;
+    this.minutes = 0;
     this.updateDisplay();
   }
 
@@ -36,9 +36,9 @@ class ClockDisplay {
    * go one minute forward.
    */
   public timeTick(): void {
-    this.minutes.increment();
-    if (this.minutes.getValue() === 0) {
-      this.hours.increment();
+    this.minutes = (this.minutes + 1) % 60;
+    if (this.minutes === 0) {
+      this.hours = (this.hours + 1) % 24;
     }
     this.updateDisplay();
   }
@@ -51,16 +51,26 @@ class ClockDisplay {
    */
   public setTime(hours: string, minutes: string): void {
     // Try to update the hours value
-    this.hours.setStringValue(hours);
+    this.hours = Number(hours);
     // Try to update the minutes value
-    this.minutes.setStringValue(minutes);
+    this.minutes = Number(minutes);
 
     // Update the display
     this.updateDisplay();
   }
 
   private updateDisplay() {
-    const displayString = `${this.hours.getStringValue()}:${this.minutes.getStringValue()}`;
+    let displayString = '';
+
+    if (this.hours < 10) {
+      displayString += '0';
+    }
+    displayString += `${this.hours}:`;
+
+    if (this.minutes < 10) {
+      displayString += '0';
+    }
+    displayString += this.minutes;
 
     this.output.innerText = displayString;
   }
