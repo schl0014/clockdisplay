@@ -1,4 +1,5 @@
 import NumberDisplay from './NumberDisplay.js';
+import Ticker from './Ticker.js';
 
 /**
  * The ClockDisplay class implements a digital clock display for a
@@ -13,11 +14,15 @@ import NumberDisplay from './NumberDisplay.js';
  * @author Michael Kölling, David J. Barnes and BugSlayer
  */
 export default class ClockDisplay {
-  private hours : NumberDisplay;
+  private hours: NumberDisplay;
 
-  private minutes : NumberDisplay;
+  private ticker: Ticker;
+
+  private minutes: NumberDisplay;
 
   private output: HTMLElement;
+
+  private seconds: NumberDisplay;
 
   /**
    * Construct a new ClockDisplay instance
@@ -26,9 +31,11 @@ export default class ClockDisplay {
    *   be displayed
    */
   public constructor(output: HTMLElement) {
+    this.ticker = new Ticker(this, 1000);
     this.output = output;
     this.hours = new NumberDisplay(24);
     this.minutes = new NumberDisplay(60);
+    this.seconds = new NumberDisplay(60);
     this.updateDisplay();
   }
 
@@ -37,10 +44,14 @@ export default class ClockDisplay {
    * go one minute forward.
    */
   public timeTick(): void {
-    this.minutes.increment();
-    if (this.minutes.getValue() === 0) {
-      this.hours.increment();
+    this.seconds.increment();
+    if (this.seconds.getValue() === 0) {
+      this.minutes.increment();
+      if (this.minutes.getValue() === 0) {
+        this.hours.increment();
+      }
     }
+
     this.updateDisplay();
   }
 
@@ -49,20 +60,31 @@ export default class ClockDisplay {
    *
    * @param hours the Hours value as a `string`
    * @param minutes the Minutes value as a `string`
+   * @param seconds
    */
-  public setTime(hours: string, minutes: string): void {
+  public setTime(hours: string, minutes: string, seconds: string): void {
     // Try to update the hours value
     this.hours.setStringValue(hours);
     // Try to update the minutes value
     this.minutes.setStringValue(minutes);
+
+    this.seconds.setStringValue(seconds);
 
     // Update the display
     this.updateDisplay();
   }
 
   private updateDisplay() {
-    const displayString = `${this.hours.getStringValue()}:${this.minutes.getStringValue()}`;
+    const displayString = `${this.hours.getStringValue()}:${this.minutes.getStringValue()}:${this.seconds.getStringValue()}`;
 
     this.output.innerText = displayString;
+  }
+
+  stop() {
+    this.ticker.stopRunning();
+  }
+
+  start() {
+    this.ticker.startRunning();
   }
 }

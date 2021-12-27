@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
   const outputHTMLElement = document.getElementById('output') as HTMLElement;
   const hoursInput = document.getElementById('hoursInput') as HTMLInputElement;
   const minutesInput = document.getElementById('minutesInput') as HTMLInputElement;
+  const secondsInput = document.getElementById('secondsInput') as HTMLInputElement
 
   // Create the clock
   const clock = new ClockDisplay(outputHTMLElement);
@@ -21,6 +22,16 @@ window.addEventListener('load', () => {
 
   document.getElementById('setTime').addEventListener('click', () => {
     console.log('User clicked setTime button');
-    clock.setTime(hoursInput.value, minutesInput.value);
+    clock.setTime(hoursInput.value, minutesInput.value, secondsInput.value);
   });
+
+  document.getElementById('stop').addEventListener('click', () => {
+    clock.stop();
+  });
+
+
+  document.getElementById('start').addEventListener('click', () => {
+    clock.start();
+  });
+
 });
